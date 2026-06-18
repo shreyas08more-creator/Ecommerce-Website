@@ -8,51 +8,74 @@ export function AddP() {
     const [image, setImage] = useState("");
 
     async function AddProduct() {
-        await supabase
+        const { error } = await supabase
             .from("Product")
-            .insert({ Name: name, Price: price, Image: image });
+            .insert({
+                Name: name,
+                Price: price,
+                Image: image
+            });
 
-        alert("Product Added");
+        if (!error) {
+            alert("✅ Product Added Successfully!");
+            setName("");
+            setPrice("");
+            setImage("");
+        }
     }
 
     return (
-        <div className="add-product-container">
+        <div className="add-product-page">
             <div className="add-product-card">
-                <h2>Add Product</h2>
 
-                <div className="input-group">
+                <div className="card-header">
+                    <h1>Add Product</h1>
+                    <p>Add new products to your ShopEase store</p>
+                </div>
+
+                <div className="form-group">
                     <label>Product Name</label>
                     <input
                         type="text"
-                        placeholder="Enter product name"
+                        placeholder="Nike Air Max"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                     />
                 </div>
 
-                <div className="input-group">
-                    <label>Price</label>
+                <div className="form-group">
+                    <label>Price (₹)</label>
                     <input
                         type="number"
-                        placeholder="Enter price"
+                        placeholder="4999"
                         value={price}
                         onChange={(e) => setPrice(e.target.value)}
                     />
                 </div>
 
-                <div className="input-group">
+                <div className="form-group">
                     <label>Image URL</label>
                     <input
                         type="text"
-                        placeholder="Paste image URL"
+                        placeholder="https://..."
                         value={image}
                         onChange={(e) => setImage(e.target.value)}
                     />
                 </div>
 
-                <button className="submit-btn" onClick={AddProduct}>
+                {image && (
+                    <div className="preview-container">
+                        <img src={image} alt="Preview" />
+                    </div>
+                )}
+
+                <button
+                    className="submit-btn"
+                    onClick={AddProduct}
+                >
                     Add Product
                 </button>
+
             </div>
         </div>
     );
