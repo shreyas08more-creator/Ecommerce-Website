@@ -34,5 +34,6 @@ If you are developing a production application, we recommend using TypeScript wi
 <img width="1406" height="462" alt="Screenshot 2026-06-17 212335" src="https://github.com/user-attachments/assets/526c7dba-551c-48ad-89a6-11260b368ad4" />
 
 ## Add Product Page
-<img width="1397" height="905" alt="Screenshot 2026-06-17 212448" src="https://github.com/user-attachments/assets/b5c83181-c5f1-445b-92f7-9f5988abe7b0" />
+<img width="1400" height="907" alt="Screenshot 2026-06-18 075013" src="https://github.com/user-attachments/assets/7c662351-61d0-4724-aa73-0ee020f77d98" />
+
 
