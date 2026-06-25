@@ -284,7 +284,8 @@ export function Home() {
           </button>
         </div>
       </section>
-<a href="/add">
+      <nav>
+<Link to ="/add">
 <button
   style={{
     backgroundColor: "white",
@@ -298,7 +299,8 @@ export function Home() {
 >
   Be a Seller
 </button>
-</a>
+</Link>
+</nav>
       {/* Footer */}
       <footer
         style={{
