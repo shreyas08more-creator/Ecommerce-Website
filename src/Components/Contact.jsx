@@ -1,101 +1,30 @@
+import React, { useState } from "react";
+import "./Contact.css";
+
 export function Contact() {
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 4000); // clear banner state
+  };
+
   return (
-    <section
-      style={{
-        maxWidth: "700px",
-        margin: "50px auto",
-        padding: "20px",
-        fontFamily: "Arial, sans-serif",
-      }}
-    >
-      <h1
-        style={{
-          textAlign: "center",
-          marginBottom: "10px",
-          color: "#222",
-        }}
-      >
-        Contact Us
-      </h1>
+    <section className="contact-container">
+      <h1>Contact Us</h1>
+      <p className="contact-desc">Have questions about our products or services? We'd love to hear from you.</p>
 
-      <p
-        style={{
-          textAlign: "center",
-          color: "#666",
-          marginBottom: "30px",
-        }}
-      >
-        Have questions about our products or services? We'd love to hear from you.
-      </p>
+      {submitted && <div className="success-toast">🎉 Message Sent Successfully! We'll reply soon.</div>}
 
-      <form
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "15px",
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Your Name"
-          style={{
-            padding: "12px",
-            border: "1px solid #ccc",
-            borderRadius: "5px",
-            fontSize: "16px",
-          }}
-        />
-
-        <input
-          type="email"
-          placeholder="Your Email"
-          style={{
-            padding: "12px",
-            border: "1px solid #ccc",
-            borderRadius: "5px",
-            fontSize: "16px",
-          }}
-        />
-
-        <textarea
-          placeholder="Your Message"
-          rows="5"
-          style={{
-            padding: "12px",
-            border: "1px solid #ccc",
-            borderRadius: "5px",
-            fontSize: "16px",
-            resize: "vertical",
-          }}
-        />
-
-        <button
-          type="submit"
-          style={{
-            padding: "12px",
-            backgroundColor: "#007bff",
-            color: "#fff",
-            border: "none",
-            borderRadius: "5px",
-            fontSize: "16px",
-            cursor: "pointer",
-          }}
-        >
-          Send Message
-        </button>
+      <form className="contact-form" onSubmit={handleSubmit}>
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea placeholder="Your Message" rows="5" required />
+        <button type="submit" className="contact-submit-btn">Send Message</button>
       </form>
-
-      <div
-        style={{
-          marginTop: "30px",
-          textAlign: "center",
-          color: "#555",
-        }}
-      >
-        <p>Email: contact@shopease.com</p>
-        <p>Phone: +1 (234) 567-8900</p>
-        <p>Address: 123 Auto Street, Car City</p>
-      </div>
     </section>
   );
 }
+
+export default Contact;
