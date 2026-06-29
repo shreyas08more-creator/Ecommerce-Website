@@ -1,21 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { supabase } from "../Supabase";
+import { supabase } from "../supabase";
 import { useNavigate } from "react-router-dom";
 
 export function Home() {
   const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // Added a loading state to prevent flash of content
   const navigate = useNavigate();
 
   useEffect(() => {
-    readProducts();
+    checkUserAndFetchData();
   }, []);
 
+  async function checkUserAndFetchData() {
+    // 1. Check if a valid session exists
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+      // If no user is logged in, redirect them to the login page
+      navigate("/login");
+      return;
+    }
+
+    // 2. If authenticated, proceed to fetch the data
+    await readProducts();
+    setLoading(false);
+  }
+
   async function readProducts() {
-    // Wrapped execution in a safe conditional block to guard against null references
     const { data } = await supabase.from("Product").select("*");
     if (data) {
       setProducts(data);
     }
+  }
+
+  // Prevent rendering the page while the auth check finishes
+  if (loading) {
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <h3>Loading...</h3>
+      </div>
+    );
   }
 
   return (
@@ -97,11 +121,10 @@ export function Home() {
       </section>
 
       <div style={{ textAlign: "center", paddingBottom: "60px" }}>
-        <a href="/add">
-          <button style={{ backgroundColor: "#2563eb", color: "white", border: "none", padding: "12px 35px", borderRadius: "30px", fontSize: "1rem", cursor: "pointer", fontWeight: "bold" }}>
-            Be a Seller
-          </button>
-        </a>
+        {/* Swapped standard anchor tag with an internal action or react-router Link to prevent complete page refreshes */}
+        <button onClick={() => navigate("/add")} style={{ backgroundColor: "#2563eb", color: "white", border: "none", padding: "12px 35px", borderRadius: "30px", fontSize: "1rem", cursor: "pointer", fontWeight: "bold" }}>
+          Be a Seller
+        </button>
       </div>
 
       <footer style={{ backgroundColor: "#111", color: "white", textAlign: "center", padding: "20px" }}>
